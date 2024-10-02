@@ -1,0 +1,9 @@
+T:CD
+N:SAB
+X:S 
+P:
+S->A
+S->BB
+A->CD
+B->AC
+B->CC
