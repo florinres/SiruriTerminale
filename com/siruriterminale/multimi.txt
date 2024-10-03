@@ -1,7 +1,6 @@
-T:CD
-N:SAB
-X:S 
-P:
+CD
+SAB
+S 
 S->A
 S->BB
 A->CD
