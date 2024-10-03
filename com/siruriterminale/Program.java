@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Vector;
 
-class Siruri{
+class TerminalStrings{
 	private final String COMP = ">";
 	private final String DPUNCTE = ":";
 	private Vector<String> T = new Vector<String>();
@@ -16,49 +16,49 @@ class Siruri{
 	private Vector<String> S = new Vector<String>();
 	private Vector<String> P = new Vector<String>();
 	
-	Siruri(){
+	TerminalStrings(){
 		try {
-			File fisier = new File("C:\\Users\\nxg06737\\eclipse-workspace-new\\SiruriTerminale\\com\\siruriterminale\\multimi.txt");
-			Scanner cititor = new Scanner(fisier);
+			File f = new File("C:\\Users\\nxg06737\\eclipse-workspace-new\\SiruriTerminale\\com\\siruriterminale\\multimi.txt");
+			Scanner reader = new Scanner(f);
 			int counter = 0;
-			while(cititor.hasNextLine()) {
-				String linie = cititor.nextLine();
+			while(reader.hasNextLine()) {
+				String line = reader.nextLine();
 					switch (counter) {
 					case 0: {
-						String[] a = linie.split("(?!^)");
+						String[] a = line.split("(?!^)");
 						for (int i = 0; i < a.length; i++) {
 							T.add(a[i]);
 						}
 						break;
 					}
 					case 1: {
-						String[] a = linie.split("(?!^)");
+						String[] a = line.split("(?!^)");
 						for (int i = 0; i < a.length; i++) {
 							N.add(a[i]);
 						}
 						break;
 					}
 					case 2: {
-						String[] a = linie.split("(?!^)");
+						String[] a = line.split("(?!^)");
 						for (int i = 0; i < a.length; i++) {
 							S.add(a[i]);
 						}
 						break;
 					}
 					default:
-						P.add(String.valueOf(linie.charAt(0)));
-						P.add(linie.substring(linie.indexOf(COMP) + 1, linie.length()));
+						P.add(String.valueOf(line.charAt(0)));
+						P.add(line.substring(line.indexOf(COMP) + 1, line.length()));
 					}
 				counter++;
 			}
-			cititor.close();
+			reader.close();
 		}
 		catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public String returneazaProductia(String a) {
+	public String resultOfProduct(String a) {
 		for (int i = 0; i < P.size(); i++) {
 			String comp = P.get(i);
 			if(a.equals(comp)){
@@ -69,39 +69,48 @@ class Siruri{
 		return null;
 	}
 	
-	public String startProductie(String termenNeterminal) {
+	public String startProduction(String termenNeterminal) {
 		if(!P.contains(termenNeterminal)) {
 			System.out.println("Productia ceruta nu exista");
 			return null;
 		}
-		String sirNou = returneazaProductia(termenNeterminal);
-		continuaProductia(sirNou);
+		String sirNou = resultOfProduct(termenNeterminal);
+		continuaProduct(sirNou);
 		
 		return "";
 	}
 	
-	public void continuaProductia(String sirNou) {
-		if(verificaTerminal(sirNou)) {
-			System.out.println("Sirul este terminal");
+	public void continuaProduct(String sirNou) {
+		String sirProdus = new String();
+		
+		if(verifiyIfTerminal(sirNou)) {
+			System.out.println("Sir este terminal");
+			return;
 		};
-		System.out.println("Sirul neterminal");
+		System.out.println("Sir neterminal");
+
+		//creare sir nou
+		for(int i = 0; i < sirNou.length();i++) {
+			String a = String.valueOf(sirNou.charAt(i));
+			String product = resultOfProduct(a);
+		}
 		
 	}
 
-	private boolean verificaTerminal(String sirNou) {
-		Boolean []sirTerminal = new Boolean[sirNou.length()];
-		Arrays.fill(sirTerminal, false);
+	private boolean verifiyIfTerminal(String newString) {
+		Boolean []terminalStringBoolArray = new Boolean[newString.length()];
+		Arrays.fill(terminalStringBoolArray, false);
 		
 		//verificare daca sirul contine doar termeni terminali
-		for (int i = 0; i < sirNou.length(); i++) {
-			String a = String.valueOf(sirNou.charAt(i));
+		for (int i = 0; i < newString.length(); i++) {
+			String a = String.valueOf(newString.charAt(i));
 			for (int j = 0; j < T.size(); j++) {
 				if(a.equals(T.get(j))) {
-					sirTerminal[i] = true;
+					terminalStringBoolArray[i] = true;
 				}
 			}
 		}
-		for(Boolean b : sirTerminal) {
+		for(Boolean b : terminalStringBoolArray) {
 			if(b == false) { return false; }
 		}
 		return true;
@@ -110,8 +119,8 @@ class Siruri{
 
 public class Program {
 	public static void main(String[] args) {
-		Siruri siruri = new Siruri();
-		siruri.startProductie("S");
+		TerminalStrings sir = new TerminalStrings();
+		sir.startProduction("S");
 		
 	}
 
