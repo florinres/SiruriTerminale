@@ -75,11 +75,18 @@ class TerminalStrings{
 		}
 	}
 	
+	//the logic should be changed in order if the same
 	public void startProduction() {
 		String termOfStart = S.firstElement();
 		
 		while(!productionNotReady(termOfStart)) {
-			Vector<String> a = P.get(termOfStart);
+			for(int i = 0; i < termOfStart.length();i++) {
+				String currentChar = String.valueOf(termOfStart.charAt(i));
+				if(P.containsKey(currentChar)) {
+					Vector<String> productions = P.get(currentChar);
+					termOfStart = changeTerm(currentChar, productions, termOfStart);
+				}
+			}
 		}
 	}
 	
@@ -94,14 +101,10 @@ class TerminalStrings{
 		return true;
 	}
 
-	public Boolean notTheSame(String sir) {
-		if (sir.equals(checkSequence)) {
-			return false;
-		}
-		
-		checkSequence = sir;
-		return true;
+	public String changeTerm(String currentChar, Vector<String> productions, String termOfStart) {
+		return termOfStart = termOfStart.replaceAll(currentChar, productions.firstElement());
 	}
+}
 
 public class Program {
 	public static void main(String[] args) {
