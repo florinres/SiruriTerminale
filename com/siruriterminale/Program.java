@@ -25,7 +25,7 @@ class TerminalStrings{
 	
 	TerminalStrings(){
 		try {
-			File f = new File("C:\\Users\\nxg06737\\OneDrive - NXP\\Desktop\\student_stuff\\SiruriTerminale\\com\\siruriterminale\\multimi.txt");
+			File f = new File("C:\\Users\\rares\\eclipse-workspace\\SiruriTerminale\\com\\siruriterminale\\multimi.txt");
 			Scanner reader = new Scanner(f);
 			int counter = 0;
 			while(reader.hasNextLine()) {
@@ -78,15 +78,18 @@ class TerminalStrings{
 	//the logic should be changed in order if the same
 	public void startProduction() {
 		String termOfStart = S.firstElement();
+		String resultOfProducts = new String();
 		
 		while(!productionNotReady(termOfStart)) {
 			for(int i = 0; i < termOfStart.length();i++) {
 				String currentChar = String.valueOf(termOfStart.charAt(i));
 				if(P.containsKey(currentChar)) {
 					Vector<String> productions = P.get(currentChar);
-					termOfStart = changeTerm(currentChar, productions, termOfStart);
+					resultOfProducts = resultOfProducts.concat(changeTerm(currentChar, productions, termOfStart));
 				}
 			}
+			termOfStart = resultOfProducts;
+			resultOfProducts = "";
 		}
 	}
 	
@@ -102,7 +105,16 @@ class TerminalStrings{
 	}
 
 	public String changeTerm(String currentChar, Vector<String> productions, String termOfStart) {
+		sequenceCheck(termOfStart, productions);
 		return termOfStart = termOfStart.replaceAll(currentChar, productions.firstElement());
+	}
+	
+	public void sequenceCheck(String sequence, Vector<String> productions) {
+		if(sequence.equals(checkSequence)) {
+			productions.remove(0);
+		}
+		
+		checkSequence = sequence;
 	}
 }
 
