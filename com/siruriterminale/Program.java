@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -84,8 +85,14 @@ class TerminalStrings{
 			for(int i = 0; i < termOfStart.length();i++) {
 				String currentChar = String.valueOf(termOfStart.charAt(i));
 				if(P.containsKey(currentChar)) {
+					try {
 					Vector<String> productions = P.get(currentChar);
 					resultOfProducts = resultOfProducts.concat(changeTerm(currentChar, productions, termOfStart));
+					}
+					catch(NoSuchElementException e) {
+						System.out.println("elementul nu exista");
+						continue;
+					}
 				}
 			}
 			termOfStart = resultOfProducts;
@@ -113,7 +120,7 @@ class TerminalStrings{
 		if(sequence.equals(checkSequence)) {
 			productions.remove(0);
 		}
-		
+		 
 		checkSequence = sequence;
 	}
 }
