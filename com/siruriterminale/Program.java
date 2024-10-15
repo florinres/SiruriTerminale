@@ -2,6 +2,7 @@ package com.siruriterminale;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -26,7 +27,7 @@ class TerminalStrings{
 	
 	TerminalStrings(){
 		try {
-			File f = new File("C:\\Users\\rares\\eclipse-workspace\\SiruriTerminale\\com\\siruriterminale\\multimi.txt");
+			File f = new File("C:\\Users\\nxg06737\\OneDrive - NXP\\Desktop\\student_stuff\\SiruriTerminale\\com\\siruriterminale\\multimi.txt");
 			Scanner reader = new Scanner(f);
 			int counter = 0;
 			while(reader.hasNextLine()) {
@@ -98,16 +99,17 @@ class TerminalStrings{
 			termOfStart = resultOfProducts;
 			resultOfProducts = "";
 		}
+		System.out.println(termOfStart);
 	}
 	
 	//scans for non-terminal terms
 	public Boolean productionNotReady(String sequence) {
-		for(int i = 0; i < sequence.length(); i++) {
-			String compare = String.valueOf(sequence.charAt(i));
-			if(N.contains(compare)) {
+		for (String i : N) {
+			if(sequence.contains(i)) {
 				return false;
 			}
 		}
+		
 		return true;
 	}
 
